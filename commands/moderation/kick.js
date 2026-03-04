@@ -1,5 +1,5 @@
 const { PermissionFlagsBits, EmbedBuilder } = require('discord.js');
-const { logKick } = require('../log');
+const { logKick } = require('../../log');
 
 module.exports = {
   name: 'kick',

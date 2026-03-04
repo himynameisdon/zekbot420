@@ -1,5 +1,5 @@
 const { PermissionFlagsBits, EmbedBuilder } = require('discord.js');
-const { logBan } = require('../log');
+const { logBan } = require('../../log');
 
 module.exports = {
   name: 'ban',

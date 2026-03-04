@@ -1,5 +1,5 @@
 const { PermissionFlagsBits, EmbedBuilder } = require('discord.js');
-const { logUntimeout } = require('../log');
+const { logUntimeout } = require('../../log');
 
 module.exports = {
   name: 'untimeout',

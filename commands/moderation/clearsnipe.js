@@ -1,4 +1,4 @@
-const { logSnipeClear } = require('../log');
+const { logSnipeClear } = require('../../log');
 
 module.exports = {
   name: 'clearsnipe',

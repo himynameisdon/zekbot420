@@ -1,5 +1,5 @@
 const { PermissionFlagsBits } = require('discord.js');
-const { logUnban } = require('../log');
+const { logUnban } = require('../../log');
 
 module.exports = {
   name: 'unban',

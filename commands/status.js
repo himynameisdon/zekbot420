@@ -1,17 +1,31 @@
+const { ActivityType } = require('discord.js');
+
 module.exports = {
     name: 'status',
-    execute(message, args) {
-      const activityType = args[0]?.toLowerCase() || 'play';
-      const activityText = args.slice(1).join(' ') || 'Something cool!';
-      const validTypes = ['play', 'watch', 'listen'];
-  
-      if (!validTypes.includes(activityType)) {
-        return message.reply('Invalid activity type. Use "play", "watch", or "listen".');
-      }
-  
-      client.user.setActivity(activityText, { type: activityType.charAt(0).toUpperCase() + activityType.slice(1) });
-      message.reply(`Changed status to: ${activityType.charAt(0).toUpperCase() + activityType.slice(1)} ${activityText}`);
+    async execute(message, args) {
+        const client = message.client;
+
+        const activityTypeRaw = (args[0] || 'play').toLowerCase();
+        const activityText = args.slice(1).join(' ') || 'Something cool!';
+
+        const typeMap = {
+            play: ActivityType.Playing,
+            watch: ActivityType.Watching,
+            listen: ActivityType.Listening,
+        };
+
+        const type = typeMap[activityTypeRaw];
+        if (!type) {
+            return message.reply('Invalid activity type. Use "play", "watch", or "listen".');
+        }
+
+        await client.user.setActivity(activityText, { type });
+
+        const pretty =
+            activityTypeRaw === 'play' ? 'Playing' :
+                activityTypeRaw === 'watch' ? 'Watching' :
+                    'Listening';
+
+        return message.reply(`Changed status to: ${pretty} ${activityText}`);
     }
-  };
-  
-// this command doesnt even work lol
+};

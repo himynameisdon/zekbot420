@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { logClearMessages } = require('../log');
+const { logClearMessages } = require('../../log');
 
 module.exports = {
   name: 'clear',
