@@ -14,7 +14,9 @@ module.exports = {
                 .setName('username')
                 .setDescription('Last.fm username (optional if linked)')
                 .setRequired(false)
-        ),
+        )
+        .setIntegrationTypes(0, 1)
+        .setContexts(0, 1, 2),
 
     async execute(interaction) {
         await interaction.deferReply();
