@@ -2,7 +2,7 @@
 
 # zekbot420 (in-dev R6 Siege api branch)
 
-Your favorite Discord bot's open-source alternative's developer is currently figuring out how to intergrate the [Ubisoft / Tom Clancy's Rainbow Six Siege](https://cobalt.tools)'s API into your favorite Discord bot open-source alternative. 
+Your favorite Discord bot's open-source alternative's developer is currently figuring out how to intergrate the [Ubisoft / Tom Clancy's Rainbow Six Siege](https://github.com/CNDRD/siegeapi)'s API into your favorite Discord bot open-source alternative. 
 
 ---
 
