@@ -11,31 +11,40 @@ const client = new Client({
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildMessageReactions
+        GatewayIntentBits.GuildMessageReactions,
+        GatewayIntentBits.GuildVoiceStates
     ],
     partials: [Partials.Message, Partials.Channel, Partials.Reaction]
 });
+
 
 client.commands = new Collection();
 client.slashCommands = new Collection();
 client.snipes = new Map();
 client.reactionSnipes = new Map();
 
-const commandsPath = './commands';
-const commandItems = fs.readdirSync(commandsPath, {withFileTypes: true});
+const commandsPath = path.join(__dirname, 'commands');
 
-for (const item of commandItems) {
-    if (item.isFile() && item.name.endsWith('.js')) {
-        const command = require(`./commands/${item.name}`);
-        client.commands.set(command.name, command);
-    } else if (item.isDirectory()) {
-        const subFiles = fs.readdirSync(path.join(commandsPath, item.name)).filter(file => file.endsWith('.js'));
-        for (const file of subFiles) {
-            const command = require(`./commands/${item.name}/${file}`);
-            client.commands.set(command.name, command);
+const loadCommands = (dir) => {
+    const entries = fs.readdirSync(dir, {withFileTypes: true});
+
+    for (const entry of entries) {
+        const fullPath = path.join(dir, entry.name);
+
+        if (entry.isDirectory()) {
+            loadCommands(fullPath);
+            continue;
         }
+
+        if (!entry.isFile() || !entry.name.endsWith('.js')) continue;
+
+        const command = require(fullPath);
+        if (!command?.name || typeof command.execute !== 'function') continue;
+        client.commands.set(command.name, command);
     }
-}
+};
+
+loadCommands(commandsPath);
 
 const slashCommandsPath = path.join(__dirname, 'slashCommands');
 if (fs.existsSync(slashCommandsPath)) {
@@ -54,10 +63,10 @@ if (fs.existsSync(slashCommandsPath)) {
     walk(slashCommandsPath);
 }
 
-client.once('ready', () => {
-    console.log(`Logged in as ${client.user.tag}`);
-    client.user.setActivity('drake maye interception compilations', {type: 3});
-});
+    client.once('clientReady', () => {
+        console.log(`Logged in as ${client.user.tag}`);
+        client.user.setActivity('drake maye interception compilations', {type: 3});
+    });
 
 // Slash commands
 client.on('interactionCreate', async (interaction) => {
