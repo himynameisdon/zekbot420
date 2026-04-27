@@ -1,5 +1,6 @@
 config.json 
 .env
 data/lastfm.json
-node_modules/
+node_modules
 data
+*.wav
