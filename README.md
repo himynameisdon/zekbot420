@@ -51,15 +51,28 @@ Your favorite Discord bot's open-source alternative.
 - Queue system
 - Skip, stop, pause, resume controls
 
+## Downloading
+- Pretty much [any video service](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md) (optional; requires yt-dlp and ffmpeg)
+
+### Stats
+- Rainbow Six Siege player stats (optional; requires Ubisoft Connect credentials)
+> [!WARNING]
+> This will be deprecated in the future and replaced with a different service for stats.
+
 ---
 
 ## Requirements
 
-- **Node.js** (recommended: current LTS)
-- **npm**
-- A Discord application + bot token
-- Permissions to add a bot to a server
+- [**Node.js**](https://nodejs.org/en) (recommended: current LTS)
+- **npm** (comes with Node.js)
+- [**A Discord application + bot token**](https://discord.com/developers/applications)
+- **Permissions to add a bot to a server** (usually a role with `Manage Server`, or you can create a test server)
 
+### Optional (depending on your use case)
+- [yt-dlp](https://github.com/yt-dlp/yt-dlp/) (for video downloading features)
+- ffmpeg (required for audio playback in voice channel features, installs with `npm install` during install)
+- [Last.fm API key](https://www.last.fm/api) (for Last.fm integration features)
+- Ubisoft Connect account (for Rainbow Six Siege integration features, *will be deprecated in the future*)
 ---
 
 ## Installation
@@ -74,6 +87,8 @@ npm install
 ## Configuration
 
 This project uses both a `.env` file and a `config.json`.
+> [!WARNING]
+> The `.env` file is the recommended place for configuration, and `config.json` will be deprecated in the future.
 
 ### 1) Create `.env`
 

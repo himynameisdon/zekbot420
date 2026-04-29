@@ -65,7 +65,7 @@ if (fs.existsSync(slashCommandsPath)) {
 
     client.once('clientReady', () => {
         console.log(`Logged in as ${client.user.tag}`);
-        client.user.setActivity('drake maye interception compilations', {type: 3});
+        client.user.setActivity('Eastern Conference Playoffs Round 1', {type: 3});
     });
 
 // Slash commands
