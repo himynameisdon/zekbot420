@@ -5,6 +5,7 @@ const {Client, GatewayIntentBits, Collection, Partials} = require('discord.js');
 require('dotenv').config();
 
 const {logMessageDeletion, logSnipeClear} = require('./log');
+const {handleVoiceStateUpdate} = require('./commands/voicemaster/vmManager');
 
 const client = new Client({
     intents: [
@@ -137,4 +138,13 @@ client.on('messageReactionAdd', async (reaction, user) => {
 });
 
 client.login(process.env.TOKEN);
+
+client.on('voiceStateUpdate', async (oldState, newState) => {
+    try {
+        await handleVoiceStateUpdate(oldState, newState);
+    } catch (error) {
+        console.error('VoiceMaster voiceStateUpdate failed:', error);
+    }
+});
+
 require('./storesnipe')(client);

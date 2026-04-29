@@ -46,10 +46,16 @@ Your favorite Discord bot's open-source alternative.
 - Last.fm commands (optional; requires API key)
 
 ### Voice
+#### Audio playback
 - Audio file playback in VC 
 - Info to see sample rate, bitrate, etc. of currently playing track
 - Queue system
 - Skip, stop, pause, resume controls
+- **Soon**: SoundCloud support
+#### VoiceMaster
+- Setup a "Join to Create" voice channel system
+- Lock/unlock voice channels, kick users from channels, rename channels
+- Usable by any server member
 
 ## Downloading
 - Pretty much [any video service](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md) (optional; requires yt-dlp and ffmpeg)
