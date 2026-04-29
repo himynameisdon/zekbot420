@@ -1,10 +1,24 @@
+<div align="center">
+
 <img width="128" height="128" alt="6ce517a4d6c725cd1b7cb51a4e4a1465" src="https://github.com/user-attachments/assets/9b181455-dc7a-4f1c-907d-ae573f10a8f6" />
 
 # zekbot420
+Learn more at: [zekbot420.swagrelated.com](https://zekbot420.swagrelated.com)
+
+<br />
+
+<img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues/himynameisdon/zekbot420?style=for-the-badge" />
+<img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues/himynameisdon/zekbot420?style=for-the-badge" />
+<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/himynameisdon/zekbot420?style=for-the-badge" />
+<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/himynameisdon/zekbot420?style=for-the-badge" />
+<img alt="GitHub License" src="https://img.shields.io/github/license/himynameisdon/zekbot420?style=for-the-badge" />
+<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/himynameisdon/zekbot420?style=for-the-badge" />
+<img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/himynameisdon/zekbot420?style=for-the-badge" />
+<img alt="GitHub contributors" src="https://img.shields.io/github/contributors-anon/himynameisdon/zekbot420?style=for-the-badge" />
 
 Your favorite Discord bot's open-source alternative.
-
----
+<br />
+</div>
 
 ## Features
 
@@ -30,6 +44,12 @@ Your favorite Discord bot's open-source alternative.
 
 ### Integrations
 - Last.fm commands (optional; requires API key)
+
+### Voice
+- Audio file playback in VC 
+- Info to see sample rate, bitrate, etc. of currently playing track
+- Queue system
+- Skip, stop, pause, resume controls
 
 ---
 
@@ -61,12 +81,21 @@ Add a `.env` file in the project root (or edit the existing one) with placeholde
 
 ```
 DISCORD_TOKEN=YOUR_DISCORD_BOT_TOKEN
+
+# Add other optional environment variables your setup requires, for example:
+
 LASTFM_API_KEY=YOUR_LASTFM_API_KEY
-# Add other environment variables your setup requires
+
+# Siege API credentials (Ubisoft Connect)
+UBISOFT_EMAIL=UBISOFT_EMAIL_ADDRESS
+UBISOFT_PASSWORD=UBISOFT_PASSWORD
+
+# SoundCloud API credentials
+SOUNDCLOUD_CLIENT_ID=YOUR_SOUNDCLOUD_CLIENT_ID
 ```
 
 
-> Reminder to NEVER commit `.env` files to a public repo.
+> Reminder to **NEVER** commit `.env` files to a public repo.
 
 ### 2) Edit `config.json`
 
@@ -96,7 +125,7 @@ npm run start
 
 ## Slash Commands (Deploying)
 
-If your bot uses slash commands, you’ll typically need to register them with Discord after changing or adding commands.
+If your bot uses slash commands, you’ll usually need to register them with Discord after changing or adding commands.
 
 Run the deploy script:
 
@@ -106,19 +135,21 @@ node deploy-commands.js
 
 Notes:
 - Global command registration can take time to propagate.
-- For faster iteration, configure a development guild and register commands to that guild while testing.
+- For faster iteration, configure a development server and register commands to that guild while testing.
 
 ---
 
 ## Data & Persistence
 
-Some features store data locally (for example: warnings/modlog/Last.fm configuration). You’ll see data files under the `data/` directory.
+Some features store data locally (for example: warnings/modlog/Last.fm configuration/audio files). You’ll see data files under the `data/` directory.
+> [!CAUTION]
+> Keep this folder on `.gitignore` to avoid accidentally committing sensitive data. 
 
 If you deploy to a platform with ephemeral storage, consider migrating persistence to a database or mounted volume.
 
 ---
 
-## Project Structure (high level)
+## Project Structure
 
 - `index.js` — bot entry point
 - `commands/` — message/prefix style commands (organized by category)

@@ -133,7 +133,10 @@ module.exports = {
       }
 
       const ext = path.extname(attachment.name || '').toLowerCase() || '.mp3';
-      const filePath = `./temp_${Date.now()}${ext}`;
+      const guildDataDir = path.join(__dirname, '..', '..', 'data', message.guild.id);
+      fs.mkdirSync(guildDataDir, { recursive: true });
+
+      const filePath = path.join(guildDataDir, `temp_${Date.now()}${ext}`);
 
       const response = await axios.get(attachment.url, { responseType: 'arraybuffer' });
       fs.writeFileSync(filePath, Buffer.from(response.data));
@@ -141,6 +144,7 @@ module.exports = {
       const probe = await probeAudio(filePath);
 
       const track = {
+        sourceType: 'local',
         filePath,
         startedAt: null,
         attachment: {
