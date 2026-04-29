@@ -4,3 +4,14 @@ data/lastfm.json
 node_modules
 data
 *.wav
+*.mp3
+*.ogg
+*.flac
+*.aac
+*.opus
+*.m4a
+*.webm
+*.mp4
+*.avi
+*.mkv
+*.mov
