@@ -81,9 +81,13 @@ Add a `.env` file in the project root (or edit the existing one) with placeholde
 
 ```
 DISCORD_TOKEN=YOUR_DISCORD_BOT_TOKEN
+DISCORD_CLIENT_ID="BOTS_CLIENT_ID"
+GUILD_ID="DEVELOPMENT_TESTING_SERVER_ID"
+PREFIX="Use any prefix you like, default is ,"
 
 # Add other optional environment variables your setup requires, for example:
 
+# Last.fm API credentials
 LASTFM_API_KEY=YOUR_LASTFM_API_KEY
 
 # Siege API credentials (Ubisoft Connect)
@@ -98,14 +102,14 @@ SOUNDCLOUD_CLIENT_ID=YOUR_SOUNDCLOUD_CLIENT_ID
 > Reminder to **NEVER** commit `.env` files to a public repo.
 
 ### 2) Edit `config.json`
+> [!WARNING]
+> This will be deprecated in the future.
 
 Open `config.json` and set the values for your bot/server (typical examples include client/app ID, guild ID for development, log channel IDs, etc.).
 
 If you’re not sure what a field does:
 - Search for the key name across the project
 - Update it gradually (start with token + basic IDs) and run the bot to verify
-
----
 
 ## Running the bot
 
