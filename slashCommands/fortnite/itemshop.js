@@ -1,5 +1,11 @@
 const axios = require('axios');
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const {
+    SlashCommandBuilder,
+    InteractionContextType,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle
+} = require('discord.js');
 
 const FNBR_KEY = process.env.FNBR_API_KEY;
 const PAGE_SIZE = 10;
@@ -53,13 +59,27 @@ function buildRow(page, totalPages) {
 }
 
 module.exports = {
-    name: 'itemshop',
-    aliases: ['fnshop', 'is'],
-    async execute(message, args) {
-        const section = args[0]?.toLowerCase();
-        if (section && !['featured', 'daily'].includes(section)) {
-            return message.reply('Usage: `,itemshop` • `,itemshop featured` • `,itemshop daily`');
-        }
+    data: new SlashCommandBuilder()
+        .setName('itemshop')
+        .setDescription('View the current Fortnite item shop')
+        .setContexts(
+            InteractionContextType.Guild,
+            InteractionContextType.BotDM,
+            InteractionContextType.PrivateChannel
+        )
+        .addStringOption(option =>
+            option.setName('section')
+                .setDescription('Which section to view (default: featured)')
+                .addChoices(
+                    { name: 'Featured', value: 'featured' },
+                    { name: 'Daily', value: 'daily' }
+                )
+        ),
+
+    async execute(interaction) {
+        await interaction.deferReply();
+
+        const section = interaction.options.getString('section') ?? 'featured';
 
         try {
             const res = await axios.get('https://fnbr.co/api/shop', {
@@ -70,20 +90,20 @@ module.exports = {
             const shopDate = new Date(date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
             const items = section === 'daily' ? (daily || []) : (featured || []);
 
-            if (!items.length) return message.reply('No items found for that section.');
+            if (!items.length) return interaction.editReply('No items found for that section.');
 
             let page = 0;
             const totalPages = Math.ceil(items.length / PAGE_SIZE);
 
-            const reply = await message.reply({
-                embeds: [buildEmbed(items, page, totalPages, shopDate, section || 'featured')],
+            const reply = await interaction.editReply({
+                embeds: [buildEmbed(items, page, totalPages, shopDate, section)],
                 components: totalPages > 1 ? [buildRow(page, totalPages)] : []
             });
 
             if (totalPages <= 1) return;
 
             const collector = reply.createMessageComponentCollector({
-                filter: i => i.user.id === message.author.id,
+                filter: i => i.user.id === interaction.user.id,
                 time: 60_000
             });
 
@@ -93,18 +113,18 @@ module.exports = {
                 if (i.customId === 'next') page++;
 
                 await i.update({
-                    embeds: [buildEmbed(items, page, totalPages, shopDate, section || 'featured')],
+                    embeds: [buildEmbed(items, page, totalPages, shopDate, section)],
                     components: [buildRow(page, totalPages)]
                 });
             });
 
-            collector.on('end', async (_, reason) => {
+            collector.on('end', async () => {
                 await reply.edit({ components: [] }).catch(() => {});
             });
 
         } catch (err) {
             console.error(err.response?.data || err.message);
-            await message.reply('Failed to fetch the item shop. Try again later.');
+            return interaction.editReply('Failed to fetch the item shop. Try again later.');
         }
     }
 };
